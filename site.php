@@ -1,6 +1,6 @@
 <?php
-    session_start();
-    require_once("dbinfo.php");   
+    require_once("dbinfo.php");  
+    
     $database = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
         /* determine if connection was successful */
         if( mysqli_connect_errno() != 0 ){
@@ -19,11 +19,19 @@
 <body>
 <div id="wrapper">
 <header>
-    <h1> Student Database - Admin Control Panel </h1>
+    <h1> Record View - Leibrandt Austria & Nicholas Neophytou</h1>
 </header>
     <main>      
         <section>
-<p>Welcome to the database</p>
+<?php
+require_once("security.php"); 
+?>
+        </section>
+        <section>
+            <p><a href="site.php">View Records</a></p>
+            <p><a href="add.php">Add to table</a></p>
+            <p><a href="update.php">Update a record</a></p>
+            <p><a href="delete.php">Delete a record</a></p>
         </section>
 
     <?php
@@ -81,7 +89,7 @@
             </section>   
     </main>
     <footer>
-        <p>Copyright 2025 <span>&copy;</span> - Leibrandt Austria</p>
+        <p>Copyright 2025 <span>&copy;</span> - Leibrandt Austria & Nicholas Neophytou</p>
     </footer>
 
 </div>
