@@ -14,29 +14,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/normalize.css">
     <link rel="stylesheet" href="css/styles.css">
-    <title>Assignment 10</title>
+    <title>PHP Final Project</title>
 </head>
 <body>
 <div id="wrapper">
 <header>
-    <h1> Student Database </h1>
+    <h1> Student Database - Admin Control Panel </h1>
 </header>
     <main>      
         <section>
-            <?php
-                require_once("security.php");  
-                //see if there are messages to display
-                if(isset($_SESSION['messages'])){    
-                    echo "<ul>";
-                    foreach($_SESSION['messages'] as $message){
-                        echo "<li>$message</li>";
-                    }
-                    echo "</ul>";
-                    //now that they'ev been displayed,
-                    //clear them from the session
-                    unset($_SESSION['messages']);
-                }
-            ?>
+<p>Welcome to the database</p>
         </section>
 
     <?php
