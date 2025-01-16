@@ -1,0 +1,58 @@
+<?php
+    //resume session
+    session_start();
+    require_once("config.php");
+
+?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/normalize.css">
+    <link rel="stylesheet" href="css/styles.css">
+    <title>Assignment 10</title>
+</head>
+<body>
+<div id="wrapper">
+<header>
+    <h1> Student Database </h1>
+</header>
+    <main>    
+    <section>
+    <?php
+
+
+//see if there are messages to display
+if(isset($_SESSION['messages'])){    
+    echo "<ul>";
+    foreach($_SESSION['messages'] as $message){
+        echo "<li>$message</li>";
+    }
+    echo "</ul>";
+     
+    //now that they'ev been displayed,
+    //clear them from the session
+    unset($_SESSION['messages']);
+}
+
+//clear session variables
+$_SESSION = array();
+//end session
+session_destroy();
+
+
+        ?> 
+        <p>You have successfully logged out.</p>
+        <p><a href="index.php">Login</a></p>
+    </section>        
+    </main>
+    <footer>
+        <p>Copyright 2025 <span>&copy;</span> - Leibrandt Austria</p>
+    </footer>
+
+</div>
+    
+</body>
+</html>
+</html>
