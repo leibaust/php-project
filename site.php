@@ -1,6 +1,5 @@
 <?php
     session_start();
-    require_once("config.php");
     require_once("dbinfo.php");   
     $mysqli = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
         /* determine if connection was successful */
@@ -38,8 +37,6 @@
                     unset($_SESSION['messages']);
                 }
             ?>
-        <p><a href="site.php">Show All Students</a></p>
-        <p><a href="search.php">Search</a></p>
         </section>
 
     <?php

@@ -1,7 +1,6 @@
 <?php
 //load the timeout duration TIMEOUT_IN_SECONDS
-require_once("config.php");
-
+const TIMEOUT_IN_SECONDS = 3600; //5 minutes
 //for storing important messages
 $messages = array();
 
