@@ -1,7 +1,7 @@
 <?php
-    session_start();
-    require_once("dbinfo.php");   
-    $mysqli = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
+    require_once("dbinfo.php");  
+    
+    $database = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
         /* determine if connection was successful */
         if( mysqli_connect_errno() != 0 ){
             die("<p>Could not connect to DB</p>");	
@@ -14,36 +14,31 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/normalize.css">
     <link rel="stylesheet" href="css/styles.css">
-    <title>Assignment 10</title>
+    <title>PHP Final Project</title>
 </head>
 <body>
 <div id="wrapper">
 <header>
-    <h1> Student Database </h1>
+    <h1> Record View - Leibrandt Austria & Nicholas Neophytou</h1>
 </header>
     <main>      
         <section>
-            <?php
-                require_once("security.php");  
-                //see if there are messages to display
-                if(isset($_SESSION['messages'])){    
-                    echo "<ul>";
-                    foreach($_SESSION['messages'] as $message){
-                        echo "<li>$message</li>";
-                    }
-                    echo "</ul>";
-                    //now that they'ev been displayed,
-                    //clear them from the session
-                    unset($_SESSION['messages']);
-                }
-            ?>
+<?php
+require_once("security.php"); 
+?>
+        </section>
+        <section>
+            <p><a href="site.php">View Records</a></p>
+            <p><a href="add.php">Add to table</a></p>
+            <p><a href="update.php">Update a record</a></p>
+            <p><a href="delete.php">Delete a record</a></p>
         </section>
 
     <?php
 
     //query the database for all students and order by lastname
     $query = "SELECT id, firstname, lastname FROM students ORDER BY lastname DESC ";
-    $result = $mysqli->query( $query );
+    $result = $database->query( $query );
     
     
     /*
@@ -94,7 +89,7 @@
             </section>   
     </main>
     <footer>
-        <p>Copyright 2025 <span>&copy;</span> - Leibrandt Austria</p>
+        <p>Copyright 2025 <span>&copy;</span> - Leibrandt Austria & Nicholas Neophytou</p>
     </footer>
 
 </div>

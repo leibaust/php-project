@@ -1,40 +1,38 @@
 <?php
-//load the timeout duration TIMEOUT_IN_SECONDS
-const TIMEOUT_IN_SECONDS = 3600; //5 minutes
-//for storing important messages
-$messages = array();
+session_start();
+require_once 'dbinfo.php';  // Include the database connection info
+$conn = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
 
-if( isset($_SESSION['time-last-active']) ){
-    //detemine time now
-	$timeNow 		= time();
-	//determine time of last request
-	$timeLastAcive 	= $_SESSION['time-last-active'];
-	//figure the difference
-	$timeSinceLastRequest = $timeNow - $timeLastAcive;
-    //see if user has exceeded timeout
-    if($timeSinceLastRequest > TIMEOUT_IN_SECONDS){		
-		//prepare descriptive message
-		$_SESSION['messages'] = array("You have been logged out due to inactivity");
-		//forward user to logout page
-		header("location: logout.php");
-		//terminate this script
-		die();
-	}else{
-		//reset the time last active
-		//to give user a fresh new timeout duration		
-		$_SESSION['time-last-active'] = time();
-	}
-
-}else{
-    $messages[] = "Please log in to access the content.";
-    //save message in session
-    $_SESSION['messages'] = $messages;
-    //forward user back to the login page
-    header("location: index.php");
-    die();
-}
-if( isset($_SESSION['username']) ){
+// Check if the user is logged in
+if (!isset($_SESSION['username'])) {
+    header("Location: index.php");  // Redirect to login if not logged in
+    exit();
+} else {
     echo "<p>Hello <strong>".ucfirst(strtolower($_SESSION['username']))."</strong>. Your account is verified</p>";
 }
 
-?>
+$username = $_SESSION['username'];  // Get the logged-in username
+
+// Check connection
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+
+$timeout = 3600;  // Set session timeout limit (in seconds)
+
+if (isset($_SESSION['last_activity'])) {
+    // If the session has been idle for longer than the timeout period, destroy the session
+    if ((time() - $_SESSION['last_activity']) > $timeout) {
+        if (!isset($_SESSION['messages'])) {
+            $_SESSION['messages'] = [];
+        }
+        $_SESSION['messages'][] = "<p>$username logged out due to inactivity</p>";
+        header("Location: logout.php");  // Redirect to login page
+        exit();
+    }
+}
+
+
+
+// Update the last activity timestamp on every page load to track session time
+$_SESSION['last_activity'] = time();
