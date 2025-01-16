@@ -1,6 +1,5 @@
 <?php
-    session_start();
-    require_once("dbinfo.php");   
+    require_once("dbinfo.php");  
     $database = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
         /* determine if connection was successful */
         if( mysqli_connect_errno() != 0 ){
@@ -23,7 +22,12 @@
 </header>
     <main>      
         <section>
-<p>Welcome to the database</p>
+
+<?php
+require_once("security.php");
+?>
+<p>Add records below</p>
+
         </section>
         <section>
             <p><a href="site.php">View Records</a></p>

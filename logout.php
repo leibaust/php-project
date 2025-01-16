@@ -20,15 +20,14 @@
     <main>    
     <section>
     <?php
-
-
+$username = $_SESSION['username'];  // Get the logged-in username
 //see if there are messages to display
 if(isset($_SESSION['messages'])){    
-    echo "<ul>";
+
     foreach($_SESSION['messages'] as $message){
-        echo "<li>$message</li>";
+        echo "$message";
     }
-    echo "</ul>";
+
      
     //now that they'ev been displayed,
     //clear them from the session
@@ -38,11 +37,13 @@ if(isset($_SESSION['messages'])){
 //clear session variables
 $_SESSION = array();
 //end session
-session_destroy();
 
 
+
+        
+        echo "<p>Thanks for stopping by $username, you have successfully logged out.</p>";
+        session_destroy();
         ?> 
-        <p>You have successfully logged out.</p>
         <p><a href="index.php">Login</a></p>
     </section>        
     </main>
