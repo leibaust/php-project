@@ -8,8 +8,8 @@ DB_PASS is the appropriate MySQL password for the DB_USER
 DB_NAME is the name of the database to connect with
 */
 const DB_HOST		= "localhost";			
-const DB_USER		= "dynex03";	// <-- add your MySQL userame here
-const DB_PASS		= "awd1058294";	// <-- add your MySQL password here
+const DB_USER		= "lostark";	// <-- add your MySQL userame here
+const DB_PASS		= "1234";	// <-- add your MySQL password here
 const DB_NAME		= "bcit";
 
 /* 

@@ -19,21 +19,16 @@ session_start();
 </header>
 <main>
     <section>
-<?php
-
-//see if there are messages to display
-if(isset($_SESSION['messages'])){    
-    echo "<ul>";
-    foreach($_SESSION['messages'] as $message){
-        echo "<li>$message</li>";
-    }
-    echo "</ul>";
-
-    //now that they'ev been displayed,
-    //clear them from the session
-    unset($_SESSION['messages']);
+    <?php
+//check to see if there are any errors
+if( isset($_SESSION['errorMessages']) ){
+    //if so, display the error messages
+    echo $_SESSION['errorMessages'];
+    //clear the error message after we display it,
+    //so that we dont later on read the same error and think its new 
+    unset($_SESSION['errorMessages']);
 }
-        ?>
+?>
         <p>Enter account details below</p>
     <form action="authenticator.php" method="post">
     <div>

@@ -1,7 +1,7 @@
 <?php
     session_start();
     require_once("dbinfo.php");   
-    $mysqli = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
+    $database = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
         /* determine if connection was successful */
         if( mysqli_connect_errno() != 0 ){
             die("<p>Could not connect to DB</p>");	
@@ -43,7 +43,7 @@
 
     //query the database for all students and order by lastname
     $query = "SELECT id, firstname, lastname FROM students ORDER BY lastname DESC ";
-    $result = $mysqli->query( $query );
+    $result = $database->query( $query );
     
     
     /*
