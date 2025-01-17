@@ -21,7 +21,11 @@
 <header>
     <h1> Student Data - Leibrandt Austria & Nicholas Neophytou</h1>
 </header>
-    <main>      
+    <main>    
+    <section>
+            <p><a href="site.php">Home</a></p>
+            <p><a href="add.php">Add Record</a></p>
+        </section>  
         <section>
 <?php
 require_once("security.php"); 
@@ -35,10 +39,7 @@ if (isset($_SESSION['messages'])) {
 }
 ?>
         </section>
-        <section>
-            <p><a href="site.php">Home</a></p>
-            <p><a href="add.php">Add Record</a></p>
-        </section>
+
 
     <?php
 
