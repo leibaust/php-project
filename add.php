@@ -1,10 +1,33 @@
 <?php
-    require_once("dbinfo.php");  
-    $database = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
-        /* determine if connection was successful */
-        if( mysqli_connect_errno() != 0 ){
-            die("<p>Could not connect to DB</p>");	
+    session_start();
+    require_once("dbinfo.php");
+
+    // if connecting is good continue
+    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+        $conn = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
+
+        // error check if fail
+        if ($conn->connect_errno) {
+            die("<p>Could not connect to DB: " . $conn->connect_error . "</p>");
         }
+
+       // protect from sql injection
+        $id = $conn->real_escape_string($_POST['id']);
+        $firstname = $conn->real_escape_string($_POST['firstname']);
+        $lastname = $conn->real_escape_string($_POST['lastname']);
+        
+        $sql = "INSERT INTO students (id, firstname, lastname) VALUES ('$id', '$firstname', '$lastname')";
+        
+        if ($conn->query($sql) === TRUE) {
+
+            // message for site.php if working
+            $_SESSION['messages'][] = "Student added successfully with ID $id!";
+            header("Location: site.php"); // if all works go to site.php
+            exit();
+        } else {
+            $_SESSION['messages'][] = "Error adding student: " . $conn->error;
+        }
+    }
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -13,37 +36,36 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/normalize.css">
     <link rel="stylesheet" href="css/styles.css">
-    <title>PHP Final Project</title>
+    <title>Add Student - PHP Final Project</title>
 </head>
 <body>
 <div id="wrapper">
-<header>
-    <h1> Add a record - Leibrandt Austria & Nicholas Neophytou</h1>
-</header>
-    <main>      
-    <section>
-        <p><a href="site.php">Home</a></p>
-        <p><a href="add.php">Add Record</a></p>
-    </section>
+    <header>
+        <h1>Add New Student</h1>
+    </header>
+    <main>
         <section>
-<?php
-require_once("security.php");
-?>
-<p>Add a record below</p>
+            <p><a href="site.php">Back to Student List</a></p>
+        </section>
+        <section>
 
-</section>
-
-
-
-<section>
-            <a href="logout.php" class="logout">Logout</a>  
-            </section>   
+            <form action="add.php" method="POST">
+                <label for="id">Student ID</label>
+                <input type="text" name="id" id="id" required>
+                <br>
+                <label for="firstname">First Name:</label>
+                <input type="text" name="firstname" id="firstname" required>
+                <br>
+                <label for="lastname">Last Name:</label>
+                <input type="text" name="lastname" id="lastname" required>
+                <br>
+                <button type="submit">Add Student</button>
+            </form>
+        </section>
     </main>
     <footer>
         <p>Copyright 2025 <span>&copy;</span> - Leibrandt Austria & Nicholas Neophytou</p>
     </footer>
-
 </div>
-    
 </body>
 </html>
