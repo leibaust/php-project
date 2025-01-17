@@ -21,23 +21,21 @@
     <h1> Add a record - Leibrandt Austria & Nicholas Neophytou</h1>
 </header>
     <main>      
+    <section>
+        <p><a href="site.php">Home</a></p>
+        <p><a href="add.php">Add Record</a></p>
+    </section>
         <section>
-
 <?php
 require_once("security.php");
 ?>
-<p>Add records below</p>
+<p>Add a record below</p>
 
-        </section>
-        <section>
-            <p><a href="site.php">View Records</a></p>
-            <p><a href="add.php">Add to table</a></p>
-            <p><a href="update.php">Update a record</a></p>
-            <p><a href="delete.php">Delete a record</a></p>
-        </section>
+</section>
 
 
-    <section>
+
+<section>
             <a href="logout.php" class="logout">Logout</a>  
             </section>   
     </main>

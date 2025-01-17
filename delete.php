@@ -1,49 +1,23 @@
 <?php
-    require_once("dbinfo.php");  
-    $database = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
-        /* determine if connection was successful */
-        if( mysqli_connect_errno() != 0 ){
-            die("<p>Could not connect to DB</p>");	
-        }
+session_start();
+require_once 'dbinfo.php';
+$conn = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
+
+if (isset($_GET['id'])) {
+    $id = $_GET['id'];
+
+    // Fetch the record to get details for the message
+    $result = $conn->query("SELECT * FROM students WHERE id='$id'");
+    $record = $result->fetch_assoc();
+
+    $sql = "DELETE FROM students WHERE id='$id'";
+    if ($conn->query($sql) === TRUE) {
+        $affectedRows = $conn->affected_rows;
+        $_SESSION['messages'][] = "Record with ID $id was deleted. $affectedRows row(s) affected.";
+        header("Location: site.php");
+        exit();
+    } else {
+        echo "Error deleting record: " . $conn->error;
+    }
+}
 ?>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/normalize.css">
-    <link rel="stylesheet" href="css/styles.css">
-    <title>PHP Final Project</title>
-</head>
-<body>
-<div id="wrapper">
-<header>
-    <h1> Delete a Record - Leibrandt Austria & Nicholas Neophytou</h1>
-</header>
-    <main>      
-        <section>
-<?php
-require_once("security.php");
-?>
-<p>Delete records below</p>
-        </section>
-        <section>
-            <p><a href="site.php">View Records</a></p>
-            <p><a href="add.php">Add to table</a></p>
-            <p><a href="update.php">Update a record</a></p>
-            <p><a href="delete.php">Delete a record</a></p>
-        </section>
-
-
-    <section>
-            <a href="logout.php" class="logout">Logout</a>  
-            </section>   
-    </main>
-    <footer>
-        <p>Copyright 2025 <span>&copy;</span> - Leibrandt Austria & Nicholas Neophytou</p>
-    </footer>
-
-</div>
-    
-</body>
-</html>

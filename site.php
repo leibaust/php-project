@@ -19,20 +19,27 @@
 <body>
 <div id="wrapper">
 <header>
-    <h1> Record View - Leibrandt Austria & Nicholas Neophytou</h1>
+    <h1> Student Data - Leibrandt Austria & Nicholas Neophytou</h1>
 </header>
-    <main>      
+    <main>    
+    <section>
+            <p><a href="site.php">Home</a></p>
+            <p><a href="add.php">Add Record</a></p>
+        </section>  
         <section>
 <?php
 require_once("security.php"); 
+if (isset($_SESSION['messages'])) {
+    echo "<ul>";
+    foreach ($_SESSION['messages'] as $message) {
+        echo "<li>$message</li>";
+    }
+    echo "</ul>";
+    unset($_SESSION['messages']);
+}
 ?>
         </section>
-        <section>
-            <p><a href="site.php">View Records</a></p>
-            <p><a href="add.php">Add to table</a></p>
-            <p><a href="update.php">Update a record</a></p>
-            <p><a href="delete.php">Delete a record</a></p>
-        </section>
+
 
     <?php
 
@@ -71,6 +78,8 @@ require_once("security.php");
         //so use the -> operator to access the Object's values...
         echo "<th>" . $oneFieldAsAnObject->name . "</th>";		 
     }
+    echo "<th>Update</th>"; // Add header for the Update column
+    echo "<th>Delete</th>"; // Add header for the Delete column
     echo "</tr>";
     
     //now that the table headings are displayed, 
@@ -80,10 +89,17 @@ require_once("security.php");
         foreach($oneRecord as $field){
             echo "<td>" .$field . "</td>"; 
         }
+        echo "<td><a href='update.php?id=$oneRecord[0]'>Update</a></td>";
+        echo "<td><a href='delete.php?id=$oneRecord[0]' onclick='return confirmDelete()'>Delete</a></td>";
         echo "</tr>";	
     }
     echo "</table>";
-    ?>
+?>
+<script>
+    function confirmDelete() {
+    return confirm('Are you sure you want to delete this record?');
+    }
+</script>
     <section>
             <a href="logout.php" class="logout">Logout</a>  
             </section>   
