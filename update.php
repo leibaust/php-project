@@ -23,10 +23,11 @@
 </header>
     <main>      
         <section>
+<p>Welcome to the database</p>
 <?php
 require_once("security.php");
 ?>
-<p>Update records below</p>
+<p>Add records below</p>
         </section>
         <section>
             <p><a href="site.php">View Records</a></p>
