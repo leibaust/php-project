@@ -24,7 +24,8 @@ require_once 'dbinfo.php';
 $conn = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
 
 if (isset($_GET['id'])) {
-    $id = $_GET['id'];
+    $id = $conn->real_escape_string($_GET['id']);
+
 
     // Fetch the current record
     $result = $conn->query("SELECT * FROM students WHERE id='$id'");
@@ -32,10 +33,10 @@ if (isset($_GET['id'])) {
 }
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $id = $_POST['id'];
-    $new_id = $_POST['new_id'];
-    $firstname = $_POST['firstname'];
-    $lastname = $_POST['lastname'];
+    $id = $conn->real_escape_string($_POST['id']);
+    $new_id = $conn->real_escape_string($_POST['new_id']);
+    $firstname = $conn->real_escape_string($_POST['firstname']);
+    $lastname = $conn->real_escape_string($_POST['lastname']);
 
         // Check if new ID is unique
         $check_result = $conn->query("SELECT * FROM students WHERE id='$new_id'");
