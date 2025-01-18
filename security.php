@@ -32,7 +32,5 @@ if (isset($_SESSION['last_activity'])) {
     }
 }
 
-
-
 // Update the last activity timestamp on every page load to track session time
 $_SESSION['last_activity'] = time();
