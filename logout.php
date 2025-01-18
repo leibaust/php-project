@@ -1,7 +1,6 @@
 <?php
     //resume session
     session_start();
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -20,7 +19,15 @@
     <main>    
     <section>
     <?php
-$username = $_SESSION['username'];  // Get the logged-in username
+    // prevents fatal errors if page is refreshed or re-accessed after logout
+    try {
+        if (!isset($_SESSION['username'])) {
+            throw new Exception("page accessed after session ended, no username found");
+        }
+        $username = $_SESSION['username'];  // Get the logged-in username
+    } catch (Exception $e) {
+        $username = "guest";
+    }
 //see if there are messages to display
 if(isset($_SESSION['messages'])){    
 
