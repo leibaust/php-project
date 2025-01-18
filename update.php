@@ -46,14 +46,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             exit();
         }
 
-    $sql = "UPDATE students SET firstname='$firstname', lastname='$lastname' WHERE id='$id'";
+    // Update the record
+    $sql = "UPDATE students SET id='$new_id', firstname='$firstname', lastname='$lastname' WHERE id='$id'";
     if ($conn->query($sql) === TRUE) {
-        $_SESSION['messages'][] = "Record with ID $id was updated.";
+        $_SESSION['messages'][] = "Record with ID $id was updated to $new_id.";
         header("Location: site.php");
         exit();
     } else {
         echo "Error updating record: " . $conn->error;
-    }}
+    }
+}
 ?>
 <p>Update Information Below</p>
         </section>
