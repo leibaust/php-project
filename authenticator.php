@@ -14,13 +14,13 @@ $password = "";
 
 
 /* validate the form fields: ensure form data is set */
-if(!isset($_POST['username']) || !isset($_POST['password']) ){
+if (!isset($_POST['username']) || !isset($_POST['password'])) {
 	$_SESSION['errorMessages'] = "<p class='error'>Please login...</p>";
 	header("Location: index.php");
 	die();
 }
 /* validate the form fields: ensure form fields contain data */
-if( trim($_POST['username'])=="" ||  trim($_POST['password'])=="" ){
+if (trim($_POST['username']) == "" ||  trim($_POST['password']) == "") {
 	$_SESSION['errorMessages'] = "<p class='error'>Please fill in the form...</p>";
 	header("Location: index.php");
 	die();
@@ -34,7 +34,7 @@ $password = trim($_POST['password']);
 /* attempt a connection to MySQL */
 $database = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
 /* determine if connection was successful */
-if(mysqli_connect_errno() !=0 ){
+if (mysqli_connect_errno() != 0) {
 	$_SESSION['errorMessages'] = "<p class='error'>Uh oh... could not connect to database to log you in. Please try again later.</p>";
 	header("Location: index.php");
 	die();
@@ -67,7 +67,7 @@ $result = $database->query($query);
 /* if no records matched the provided username/password, 
 	then this user is not in our database, and so are unauthorized
 */
-if($result->num_rows != 1){
+if ($result->num_rows != 1) {
 	$_SESSION['errorMessages'] = "<p class='error'>Invalid username. Try again...</p>";
 	header("Location: index.php");
 	die();
@@ -84,10 +84,10 @@ $passwordFieldFromDatabase = $record[0];
 password_verify( $providedPassword, $hashedPassword ) 
 returns true of the two passwords match, false if no match
 */
-if(password_verify( $password, $passwordFieldFromDatabase) == false ){
+if (password_verify($password, $passwordFieldFromDatabase) == false) {
 	$_SESSION['errorMessages'] = "<p class='error'>Invalid password. Try again...</p>";
 	header("Location: index.php");
-	die();	
+	die();
 }
 
 /* close MySQL connection */
@@ -103,4 +103,3 @@ $_SESSION['username'] = ucfirst(strtolower($username));
 
 header("Location: site.php");
 die();
-?>

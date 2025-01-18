@@ -8,7 +8,7 @@ if (!isset($_SESSION['username'])) {
     header("Location: index.php");  // Redirect to login if not logged in
     exit();
 } else {
-    echo "<p>Hello <strong>".ucfirst(strtolower($_SESSION['username']))."</strong>. Your account is verified</p>";
+    echo "<p>Hello <strong>" . ucfirst(strtolower($_SESSION['username'])) . "</strong>. Your account is verified</p>";
 }
 
 $username = $_SESSION['username'];  // Get the logged-in username
