@@ -1,40 +1,3 @@
-<?php
-session_start();
-require_once("dbinfo.php");
-
-// if connecting is good continue
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $conn = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
-
-    // error check if fail
-    if ($conn->connect_errno) {
-        die("<p>Could not connect to DB: " . $conn->connect_error . "</p>");
-    }
-
-    // protect from sql injection
-    $id = $conn->real_escape_string($_POST['id']);
-    $firstname = $conn->real_escape_string($_POST['firstname']);
-    $lastname = $conn->real_escape_string($_POST['lastname']);
-
-    $checkSql = "SELECT * FROM students WHERE id='$id'";
-    $result = $conn->query($checkSql);
-
-    if ($result->num_rows > 0) {
-        $_SESSION['messages'][] = "Error: Student ID $id already exists. Choose a different ID.";
-    } else {
-        $sql = "INSERT INTO students (id, firstname, lastname) VALUES ('$id', '$firstname', '$lastname')";
-
-        if ($conn->query($sql) === TRUE) {
-            // Success message if student is added
-            $_SESSION['messages'][] = "Student added successfully with ID $id!";
-            header("Location: site.php"); // Redirect to site.php on success
-            exit();
-        } else {
-            $_SESSION['messages'][] = "Error adding student: " . $conn->error;
-        }
-    }
-}
-?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -52,6 +15,45 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <h1>Add New Student</h1>
         </header>
         <main>
+            <section>
+                <?php
+                require_once('security.php');
+                require_once("dbinfo.php");
+
+                // if connecting is good continue
+                if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+                    $conn = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
+
+                    // error check if fail
+                    if ($conn->connect_errno) {
+                        die("<p>Could not connect to DB: " . $conn->connect_error . "</p>");
+                    }
+
+                    // protect from sql injection
+                    $id = $conn->real_escape_string($_POST['id']);
+                    $firstname = $conn->real_escape_string($_POST['firstname']);
+                    $lastname = $conn->real_escape_string($_POST['lastname']);
+
+                    $checkSql = "SELECT * FROM students WHERE id='$id'";
+                    $result = $conn->query($checkSql);
+
+                    if ($result->num_rows > 0) {
+                        $_SESSION['messages'][] = "Error: Student ID $id already exists. Choose a different ID.";
+                    } else {
+                        $sql = "INSERT INTO students (id, firstname, lastname) VALUES ('$id', '$firstname', '$lastname')";
+
+                        if ($conn->query($sql) === TRUE) {
+                            // Success message if student is added
+                            $_SESSION['messages'][] = "Student added successfully with ID $id!";
+                            header("Location: site.php"); // Redirect to site.php on success
+                            exit();
+                        } else {
+                            $_SESSION['messages'][] = "Error adding student: " . $conn->error;
+                        }
+                    }
+                }
+                ?>
+            </section>
             <section>
                 <p><a href="site.php">Back to Student List</a></p>
             </section>
