@@ -48,8 +48,6 @@ before including the data into an SQL query
 */
 $username = $database->real_escape_string($username);
 $password = $database->real_escape_string($password);
-
-
 /*
 -----------------------------------------------------------------------------------------------
 IMPORTANT: the password_verify() function requires the hashedPasswordpassword before it can be run.

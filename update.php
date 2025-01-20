@@ -22,7 +22,7 @@
             <section>
                 <?php
                 require_once("security.php");
-                require_once 'dbinfo.php';
+                require_once('dbinfo.php');
                 $conn = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
 
                 if (isset($_GET['id'])) {
